@@ -15,7 +15,6 @@ public:
             if(res < currentmax) {
                 res = currentmax;
             }
-
         }
         return res;
     }
