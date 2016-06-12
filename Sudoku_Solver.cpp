@@ -45,7 +45,6 @@ public:
         }
         return false;
     }
-    
     void solveSudoku(vector<vector<char>>& board) {
          findSolution(board,0);
     }
