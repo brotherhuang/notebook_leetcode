@@ -13,57 +13,40 @@ A sudoku puzzle...
 Subscribe to see which companies asked this question */
 class Solution {
 public:
-    bool checkRow(vector<vector<char>>& board, int row, int num){
-        for(int col = 0; col < 9; col++){
-            if(board[row][col] == '0' + num){
-                return true;
+    vector<char> findCandidate(vector<vector<char>> board, int row, int col){
+        vector<char> candidate(9,true);
+        for(int i = 0; i < 9 ; i ++){
+             candidate[board[row][i] - '1'] = false;
+             candidate[board[i][col] - '1'] = false;
+        }
+        int blockRow = row / 3;
+        int blockCol = col / 3;
+        for(int i = blockRow * 3; i < blockRow * 3 + 3; i++){
+            for(int j = blockCol * 3 ; j < blockCol *3 + 3; j++){
+                candidate[board[i][j] - '1'] = false;
             }
+        }
+        vector<char> res;
+        for(int i = 0; i < candidate.size(); i++){
+            if(candidate[i]) res.push_back('1' + i);
+        }
+        return res;
+    }
+    bool findSolution(vector<vector<char>>& board, int pos){
+        if(pos == 81) return true;
+        int row = pos/9;
+        int col = pos%9;
+        if(board[row][col]!= '.') return findSolution(board,pos + 1);
+        vector<char> candidates = findCandidate(board,row,col);
+        for(int i = 0; i < candidates.size(); i++){
+            board[row][col] = candidates[i];
+            if(findSolution(board,pos+1)) return true;
+            board[row][col] = '.';
         }
         return false;
     }
-    bool checkCol(vector<vector<char>>& board, int col, int num){
-        for(int row = 0; row < 9; row++){
-            if(board[row][col] == '0' + num){
-                return true;
-            }
-        }
-        return false;
-    }
-    bool checkBox(vector<vector<char>>& board, int startRow, int startCol, int num){
-        for(int row = 0; row < 3; row++){
-            for(int col = 0; col < 3; col++){
-                if(board[row+startRow][col + startCol] == '0' + num){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    bool findNext(vector<vector<char>>& board, int &row, int&col){
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                if(board[i][j] == '.'){
-                    row = i;
-                    col = j;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    bool validSolution(vector<vector<char>>& board){
-        int row, col;
-        if(!findNext(board,row,col)) return true;
-        for(int num = 1; num <= 9 ; num++){
-            if(!checkRow(board,row,num) && !checkCol(board,col,num) && !checkBox(board,row - row % 3,col - col % 3,num)){
-                board[row][col] = '0' + num;
-                if(validSolution(board)) return true;
-                board[row][col] = '.';
-            }
-        }
-        return false;
-    }
+    
     void solveSudoku(vector<vector<char>>& board) {
-         validSolution(board);
+         findSolution(board,0);
     }
 };
