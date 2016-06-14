@@ -9,22 +9,22 @@ Return "acdb" */
 class Solution {
 public:
     string removeDuplicateLetters(string s) {
-        vector<int> charlist(26,0);
+        vector<int> charList(26,0);
         for (const auto& c : s) {
-            charlist[c - 'a']++;
+            charList[c - 'a']++;
         }
-        unordered_set<char> in_stack;
+        vector<bool> usedChar(26,false);
         string res;
         for (const auto& c : s) {
-            if (!in_stack.count(c)) {
-                while (!res.empty() && res.back() > c && charlist[res.back() - 'a']) {
-                    in_stack.erase(res.back());
+            if (!usedChar[c - 'a']) {
+                while (!res.empty() && res.back() > c && charList[res.back() - 'a']) {
+                    usedChar[res.back() - 'a'] = false;
                     res.pop_back();
                 }
                 res.push_back(c);
-                in_stack.emplace(c);
+                usedChar[c - 'a'] = true;
             }
-            charlist[c - 'a']--;
+            charList[c - 'a']--;
         }
         return res;
     }
