@@ -5,30 +5,29 @@ Now, instead outputting board configurations, return the total number of distinc
 */
 class Solution {
 public:
-    int res;
-    bool isValid(vector<int> Que, int r){
-        for (int i=0;i<r;i++){
-            if ( (Que[i]==Que[r])||(abs(Que[i]-Que[r])==(r-i))){
-                return false;
-            }
+    void findSolution(int n, vector<int> pos, int row, int& res){
+        if(pos.size() == n){
+            res++;
         }
-        return true;
-    }
-    void nqueens(vector<int> Que, int cur, int n){
-        if (cur==n){ res++;return;}
-        else{
-            for (int i=0;i<n;i++){
-                Que[cur]=i;
-                if (isValid(Que,cur)){
-                    nqueens(Que,cur+1,n);
+        for(int i  = 0; i < n; i++){
+            bool valid = true;
+            for(int j = 0; j < pos.size(); j++){
+                if(i == pos[j] || abs(i - pos[j]) == row - j){
+                    valid = false;
+                    break;
                 }
+            }
+            if(valid){
+                pos.push_back(i);
+                findSolution(n,pos,row + 1, res);
+                pos.pop_back();
             }
         }
     }
     int totalNQueens(int n) {
-        res=0;
-        vector<int> Que(n,0);
-        nqueens(Que,0,n);
+        int res = 0;
+        vector<int> pos;
+        findSolution(n,pos,0,res);
         return res;
     }
 };
