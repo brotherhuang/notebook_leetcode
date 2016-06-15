@@ -9,6 +9,38 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1]. */
 class Solution {
 public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res;
+        unordered_map<int,int> mp;
+        for(int i = 0; i < nums.size(); i++){
+            if(mp.find(nums[i]) != mp.end()){
+                if(nums[i] * 2 == target){
+                    res.push_back(mp[nums[i]]);
+                    res.push_back(i);
+                    return res;
+                }
+            }
+            else mp[nums[i]] = i;
+        }
+        sort(nums.begin(),nums.end());
+        int start = 0;
+        int end = nums.size() - 1;
+        while(start <= end){
+            if(nums[start] + nums[end] == target){
+                res.push_back(mp[nums[start]]);
+                res.push_back(mp[nums[end]]);
+                return res;
+            }
+            else if(nums[start] + nums[end] < target) start++;
+            else end--;
+        }
+        return res;
+    }
+};
+
+
+class Solution {
+public:
     struct towSumHelp
     {
         int value;

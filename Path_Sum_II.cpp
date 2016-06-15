@@ -39,6 +39,7 @@ public:
         if(root->right){
             ress.push_back(root->val);
             findPath(root->right, target -root->val, ress,res);
+            ress.pop_back();
         }
     }
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
