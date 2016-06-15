@@ -9,6 +9,36 @@ A solution set is:
   [-1, 0, 1],
   [-1, -1, 2]
 ] */
+// replace map with binary search
+class Solution {
+public:
+    bool binarySearch(int start, int end, vector<int> nums, int target){
+        while(start <= end){
+            int mid = start + (end - start)/2;
+            if(nums[mid] == target) return true;
+            else if(nums[mid] < target) start = mid + 1;
+            else end = mid - 1;
+        }
+        return false;
+    }
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> res;
+        for(int i = 0; i < nums.size(); i++){
+            for(int j = i + 1; j < nums.size(); j++){
+                int target = - nums[i] - nums[j];
+                if(target >= nums[j] && binarySearch( j + 1, nums.size() - 1, nums, target)){
+                    vector<int> ress = {nums[i],nums[j],target};
+                    res.push_back(ress);
+                }
+                while(nums[j + 1] == nums[j] && j + 1 < nums.size()) j++;
+            }
+            while(nums[i + 1] == nums[i] && i + 1 < nums.size()) i++;
+        }
+        return res;
+    }
+};
+/* ----------------------------------------------*/
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -38,4 +68,3 @@ public:
         return res;
     }
 };
-// replace map with binary search
