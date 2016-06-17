@@ -12,17 +12,18 @@ public:
         int start = 0;
         int end = nums.size() - 1;
         while(start <= end){
+            while(start < nums.size() - 1 && nums[start + 1] == nums[start]) start++;
+            while(end > 0 && nums[end - 1] == nums[end]) end--;
             int mid = start + (end - start)/2;
             if(target == nums[mid]) return true;
-            if(nums[mid] > nums[start]){
+            if(nums[mid] >= nums[start]){
                 if(nums[start]<=target && target<= nums[mid]) end = mid - 1;
                 else start = mid + 1;
             }
-            else if (nums[mid] < nums[start]){
+            else{
                 if(nums[mid]>=target || target>= nums[start]) end = mid -1 ;
                 else start = mid + 1;
             }
-            else start++;
         }
         return false;
     }
