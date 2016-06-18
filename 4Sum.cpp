@@ -28,7 +28,7 @@ public:
             for(int j = i + 1; j < nums.size(); j++){
                 for(int k = j + 1; k < nums.size(); k++){
                 int targetk = target - nums[i] - nums[j] - nums[k];
-                if(targetk >= nums[k] && binarySearch( k + 1, nums.size() - 1, nums, targetk)){
+                if(targetk >= nums[k+1] && targetk <= nums.back() && binarySearch( k + 1, nums.size() - 1, nums, targetk)){
                     vector<int> ress = {nums[i],nums[j],nums[k],targetk};
                     res.push_back(ress);
                 }
@@ -61,7 +61,7 @@ public:
                 for(int k = j + 1; k < nums.size(); k++){
                     sp[nums[k]]--;
                 int targetk = target - nums[i] - nums[j] - nums[k];
-                if(targetk >= nums[k] && sp.find(targetk) != sp.end() && sp[targetk] > 0){
+                if(targetk >= nums[k+1] && targetk <= nums.back()&& sp.find(targetk) != sp.end() && sp[targetk] > 0){
                     vector<int> ress = {nums[i],nums[j],nums[k],targetk};
                     res.push_back(ress);
                 }
