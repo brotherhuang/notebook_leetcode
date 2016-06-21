@@ -21,7 +21,6 @@ public:
         }
         if(res.back() == ' ') res.pop_back();
         return res;
-
     }
     string numberToWords(int num) {
 	    string res;
