@@ -32,6 +32,8 @@ public:
     }
 };
 /* ---------------------------------------------------- */
+class Solution {
+public:
 long long  evalString(vector<string> num){
 	vector<string> newNum;
 	bool containProd = true;
@@ -98,14 +100,12 @@ vector<string> addOperators(string num, int target) {
 	findSolution(num, target,ress, res);
   vector<string> output;
 for (int i = 0; i < res.size(); i++){
-  if (evalString(res[i]) == target){
     string s;
     for (int j = 0; j < res[i].size(); j++){
       s = s + res[i][j];
     }
-    cout << s << endl;
     output.push_back(s);
   }
-}
     return res;
 }
+};
