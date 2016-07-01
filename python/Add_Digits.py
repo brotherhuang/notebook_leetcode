@@ -27,4 +27,4 @@ class Solution(object):
                 res += num % 10
                 num = num / 10
             num = res
-        return num    
+        return num
