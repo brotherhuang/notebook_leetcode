@@ -24,15 +24,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        if root == None : return None
+        if root is None: return None
         res = TreeNode(root.val)
         if root.left != None:
             res.right = self.invertTree(root.left)
-        else:
-            res.right = None
         if root.right != None:
             res.left = self.invertTree(root.right)
-        else :
-            res.left = None
-        return res
-            
+        return res    
