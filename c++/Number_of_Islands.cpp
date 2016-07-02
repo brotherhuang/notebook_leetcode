@@ -14,6 +14,34 @@ Example 2:
 11000
 00100
 00011 */
+
+class Solution {
+public:
+    void DFS(int i, int j, vector<vector<char>>& grid){
+        if(i >= 0 && i < grid.size() && j >=0 && j < grid[0].size() && grid[i][j] == '1'){
+            grid[i][j] = '2';
+            DFS(i - 1,j, grid);
+            DFS(i + 1,j, grid);
+            DFS(i,j - 1, grid);
+            DFS(i,j + 1, grid);
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int res = 0;
+        if(grid.size() == 0) return res;
+        for(int i = 0; i < grid.size(); i++){
+            for(int j = 0; j < grid[0].size(); j++){
+                if(grid[i][j] == '1'){
+                    res++;
+                    DFS(i,j,grid);
+                }
+            }
+        }
+        return res;
+    }
+};
+
+/*-------------------------*/
 class Solution {
 public:
     int numIslands(vector<vector<char>>& grid) {
