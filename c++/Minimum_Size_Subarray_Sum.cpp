@@ -5,17 +5,18 @@ the subarray [4,3] has the minimal length under the problem constraint. */
 class Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
-        if (nums.empty()) return 0;
-        int left = 0, right = 0, sum = 0, len = nums.size(), res = len + 1;
-        while (right < len) {
-            while (sum < s && right < len) {
-                sum += nums[right++];
-            }
-            while (sum >= s) {
-                res = min(res, right - left);
-                sum -= nums[left++];
+        if(nums.size() == 0) return 0;
+        int start = 0;
+        int sum = 0;
+        int len = INT_MAX;
+        for(int i = 0; i < nums.size(); i++){
+            sum += nums[i];
+            while(sum >= s) {
+                len = min(len, i - start + 1);
+                sum -= nums[start];
+                start++;
             }
         }
-        return res == len + 1 ? 0 : res;
+        return len == INT_MAX ? 0:len;
     }
 };
