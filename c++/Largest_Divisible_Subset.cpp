@@ -37,3 +37,41 @@ public:
         return res;
     }
 };
+
+
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        vector<int> res;
+        if(nums.empty()) return res;
+        sort(nums.begin(),nums.end());
+        vector<pair<int, int>> eachElement(nums.size());
+        int firstIndex = -1;
+        int currentSize = 0;
+        for(int i = 0; i < nums.size(); i++){
+            eachElement[i].first = 1;
+            eachElement[i].second = -1;
+            int maxIndex = -1;
+            int maxSize = 0;
+            for(int j = i -1; j >=0; j--){
+                if(nums[i] % nums[j] == 0 && eachElement[j].first > maxSize){
+                    maxSize = eachElement[j].first;
+                    maxIndex = j;
+                }
+            }
+            if(maxIndex != -1){
+                eachElement[i].first += eachElement[maxIndex].first;
+                eachElement[i].second = maxIndex;
+            }
+            if(eachElement[i].first > currentSize){
+                firstIndex = i;
+                currentSize = eachElement[i].first;
+            }
+        }
+        while(firstIndex != -1){
+            res.push_back(nums[firstIndex]);
+            firstIndex = eachElement[firstIndex].second;
+        }
+        return res;
+    }
+};
