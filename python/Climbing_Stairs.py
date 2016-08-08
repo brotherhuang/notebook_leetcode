@@ -7,10 +7,10 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        if n <= 1: return n
-        dp = [n + 1] *(n + 1)
-        dp[0] = 1
-        dp[1] = 1
+        if n < 2 : return n
+        res = [0] * (n + 1)
+        res[0] = 1
+        res[1] = 1
         for i in range(2, n + 1):
-            dp[i] = dp[i-1] + dp[i-2]
-        return dp[n]    
+            res[i] = res[i - 1] + res[i - 2]
+        return res[-1]    
