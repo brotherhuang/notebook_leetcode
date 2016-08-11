@@ -16,30 +16,23 @@ You may assume that the secret number and your friend's guess only contain digit
 class Solution {
 public:
     string getHint(string secret, string guess) {
-        vector<bool> secretCheck(secret.size(), false);
-        vector<bool> guessCheck(guess.size(), false);
+        unordered_map<char,int> mp;
         int bull = 0;
         int cow = 0;
-        for(int i = 0; i < secret.size(); i++)
-        {
-            if(secret[i] == guess[i])
-            {
-                bull++;
-                secretCheck[i] = true;
-                guessCheck[i] = true;
+        for(int i = 0; i < secret.size(); i++){
+            if(mp.find(secret[i]) != mp.end()){
+                mp[secret[i]] ++;
             }
-            else
-            {
-                for(int j = 0; j < guess.size(); j++)
-                {
-                    if(!guessCheck[j] && secret[i] == guess[j] && secret[j] != guess[j])
-                    {
-                         cow++;
-                         secretCheck[i] = true;
-                         guessCheck[j] = true;
-                         break;
-                    }
-                }
+            else mp[secret[i]] = 1;
+            if(guess[i] == secret[i]){
+                mp[secret[i]]--;
+                bull++;
+            }
+        }
+        for(int i = 0; i < guess.size(); i++){
+            if(guess[i] != secret[i] && mp.find(guess[i]) != mp.end() && mp[guess[i]] > 0 ){
+                cow++;
+                mp[guess[i]]--;
             }
         }
         string res = to_string(bull) + "A" + to_string(cow) + "B";
