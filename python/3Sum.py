@@ -35,6 +35,5 @@ class Solution(object):
                 second = nums[j]
                 left = - first - second
                 if(binarySearch(j + 1, len(nums) - 1, left, nums)) :
-                    res.append([nums[i], nums[j],left])
+                    res.append([first, second,left])
         return res
-        
