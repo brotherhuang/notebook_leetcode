@@ -5,11 +5,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        if nums is None : return False
         mp = {}
-        for i in nums :
-            if not mp.get(i):
-                mp[i] = True
-            else:
-                return True
-        return False
+        for num in nums:
+            if mp.has_key(num): return True
+            mp[num] = True
+        return False    

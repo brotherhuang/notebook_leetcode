@@ -2,6 +2,20 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> mp;
+        for(auto num : nums){
+            if(mp.find(num) != mp.end()){
+                return true;
+            }
+            mp.insert(num);
+        }
+        return false;
+    }
+};
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
         map<int,bool> mp;
         for(int i = 0; i < nums.size(); i++){
             if(mp.find(nums[i]) != mp.end()){
