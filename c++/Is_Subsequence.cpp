@@ -16,24 +16,17 @@ Return false. */
 class Solution {
 public:
     bool isSubsequence(string s, string t) {
-        unordered_map<char, vector<int>> mp;
-        for(int i = 0; i < t.size(); i++){
-            mp[t[i]].push_back(i);
-        }
-        vector<int> current = mp[s.back()];
-        for(int i = 1; i < s.size(); i++){
-            vector<int> next;
-            vector<int> nextCan = mp[s[s.size() - 1 - i]];
-            for(auto can : nextCan){
-                for(auto cur : current){
-                    if(can < cur){
-                        next.push_back(can);
-                        break;
-                    }
+       int pos = 0;
+       for(int i = 0; i < s.length(); ++i) {
+            bool is_match = false;
+            for(int j = pos; j < t.length(); ++j){
+                if(t[j] == s[i]){
+                    pos = j + 1;
+                    is_match = true;
+                    break;
                 }
             }
-            if(next.size() == 0) return false;
-            current = next;
+            if(!is_match) return false;
         }
         return true;
     }
