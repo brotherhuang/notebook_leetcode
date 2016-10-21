@@ -17,6 +17,30 @@ return [1,3,2]. */
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ class Solution {
+ public:
+     vector<int> inorderTraversal(TreeNode* root) {
+         vector<int> res;
+         vector<TreeNode*> nodeList;
+         TreeNode* current = root;
+         while(!nodeList.empty() || current != NULL){
+            if(current != NULL){
+                nodeList.push_back(current);
+                current = current->left;
+            }
+            else{
+                current = nodeList.back();
+                nodeList.pop_back();
+                res.push_back(current->val);
+                current = current->right;
+            }
+         }
+         return res;
+     }
+ };
+
+/* --------------------------------------------*/
+
 class Solution {
 public:
     void inorder(TreeNode* node, vector<int>& res){
