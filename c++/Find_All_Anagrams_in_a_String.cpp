@@ -55,4 +55,38 @@ public:
        }
        return res;
     }
-}
+};
+
+/*----------------*/
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+       vector<int> res;
+       if(s.size() < p.size()) return res;
+       vector<int> diff(26,0);
+       int zeroCount = 26;
+       for(int i = 0; i < p.size(); i++){
+           if(diff[p[i] - 'a'] == 0) zeroCount--;
+           diff[p[i] - 'a']++;
+       }
+       for(int i = 0; i <= s.size() - p.size(); i++){
+           if(i == 0){
+               for(int j = 0; j < p.size(); j++){
+                   diff[s[i + j] - 'a']--;
+                   if(diff[s[i + j] - 'a'] == 0)  zeroCount++;
+                   if(diff[s[i + j] - 'a'] == -1) zeroCount--;
+               }
+           }
+           else {
+               diff[s[i - 1] - 'a']++;
+               if(diff[s[i - 1] - 'a'] == 0) zeroCount++;
+               if(diff[s[i - 1] - 'a'] == 1) zeroCount--;
+               diff[s[i + p.size() - 1] - 'a']--;
+               if(diff[s[i + p.size() - 1] - 'a'] == -1) zeroCount--;
+               if(diff[s[i + p.size() - 1] - 'a'] == 0) zeroCount++;
+           }
+           if(zeroCount == 26) res.push_back(i);
+       }
+       return res;
+    }
+};
