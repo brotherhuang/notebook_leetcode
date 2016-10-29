@@ -19,24 +19,33 @@ where the largest sum among the two subarrays is only 18.
 */
 class Solution {
 public:
+    bool validCut(int target,  vector<int> nums, int m){
+        int cut = 1;
+        int sum = 0;
+        for(auto num : nums){
+            sum += num;
+            if(sum > target){
+                sum = num;
+                cut++;
+                if(cut > m) return false;
+            }
+        }
+        return true;
+    }
     int splitArray(vector<int>& nums, int m) {
-        if(m == 1) {
-            int sum = 0;
-            for(auto num : nums) sum += num;
-            return sum;
+        int minMax = -1;
+        int sum = 0;
+        for(auto num : nums){
+            minMax = max(minMax, num);
+            sum += num;
         }
-        if(m >= nums.size()){
-            int maxNum = 0;
-            for(auto num : nums) maxNum = max(maxNum, num);
-            return maxNum;
+        if(m == 1) return sum;
+        if(m >= nums.size()) return minMax;
+        while(minMax <= sum){
+            int mid = minMax + (sum - minMax)/2;
+            if(validCut(mid, nums, m)) sum = mid - 1;
+            else minMax = mid + 1;
         }
-        int maxNum = INT_MAX;
-        int subsum = 0;
-        for(int i = 0; i < nums.size(); i++){
-            subsum += nums[i];
-            vector<int> subarray(nums.begin() + i + 1, nums.end());
-            maxNum = min(maxNum, max(subsum,splitArray(subarray, m-1)));
-        }
-        return maxNum;
+        return minMax;
     }
 };
