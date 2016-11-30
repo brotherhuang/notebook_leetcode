@@ -19,16 +19,49 @@ All root-to-leaf paths are:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+
+ class Solution {
+ public:
+     vector<string> binaryTreePaths(TreeNode* root) {
+         vector<string> res;
+         stack<TreeNode*> nodeList;
+         TreeNode* current = root;
+         stack<string> pathStack;
+         string path;
+         while(!nodeList.empty() || current){
+             if(current){
+                 nodeList.push(current);
+                 if(current == root) path = to_string(current->val);
+                 else path = path + "->" + to_string(current->val);
+                 if(!current->left && !current->right) res.push_back(path);
+                 current = current->left;
+                 pathStack.push(path);
+             }
+             else{
+                 current = nodeList.top();
+                 nodeList.pop();
+                 path = pathStack.top();
+                 pathStack.pop();
+                 current = current->right;
+             }
+         }
+         return res;
+     }
+ };
+ 
+ /*---------------------*/
+
 class Solution {
 public:
     void pathtoRoot(TreeNode* root, string path, vector<string> &res){
         if(!root) return;
         if(path.size() != 0){
-            path = path + "->" + to_string(root->val);           
+            path = path + "->" + to_string(root->val);
         }
         else{
-           path += to_string(root->val);              
-        }        
+           path += to_string(root->val);
+        }
         if(!root->left && !root->right){
             if(path.size() != 0){
               res.push_back(path);
@@ -36,7 +69,7 @@ public:
         }
         pathtoRoot(root->left,path,res);
         pathtoRoot(root->right,path,res);
-        
+
     }
     vector<string> binaryTreePaths(TreeNode* root) {
 	    vector<string> res;
